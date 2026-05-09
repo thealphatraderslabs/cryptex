@@ -21,42 +21,61 @@ function init() {
 
   const stageWrap = $('stage');
 
+  const stageFunding  = $('stage-funding');
+  const railFunding   = $('rail-funding');
+
   function showStage(stage) {
+    // Hide all stages first
+    stageAnalysis.style.display = 'none';
+    stageSMC.style.display      = 'none';
+    if (stageFunding) stageFunding.style.display = 'none';
+    if (topStrip) topStrip.style.display = 'none';
+    if (stageWrap) stageWrap.classList.remove('smc-active');
+
+    // Clear all nav active states
+    railAnalysis?.classList.remove('active');
+    railSMC?.classList.remove('active');
+    railFunding?.classList.remove('active');
+    document.getElementById('mbr-analysis')?.classList.remove('active');
+    document.getElementById('mbr-smc')?.classList.remove('active');
+    document.getElementById('mbr-funding')?.classList.remove('active');
+
     if (stage === 'analysis') {
       stageAnalysis.style.display = '';
-      stageSMC.style.display      = 'none';
-      if (topStrip)  topStrip.style.display  = '';
-      if (stageWrap) stageWrap.classList.remove('smc-active');
+      if (topStrip) topStrip.style.display = '';
       railAnalysis?.classList.add('active');
-      railSMC?.classList.remove('active');
       document.getElementById('mbr-analysis')?.classList.add('active');
-      document.getElementById('mbr-smc')?.classList.remove('active');
-    } else {
-      stageAnalysis.style.display = 'none';
-      stageSMC.style.display      = '';
-      if (topStrip)  topStrip.style.display  = 'none';
+
+    } else if (stage === 'smc') {
+      stageSMC.style.display = '';
       if (stageWrap) stageWrap.classList.add('smc-active');
-      railAnalysis?.classList.remove('active');
       railSMC?.classList.add('active');
-      document.getElementById('mbr-analysis')?.classList.remove('active');
       document.getElementById('mbr-smc')?.classList.add('active');
       if (window.innerWidth <= 1099) {
         stageSMC.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+
+    } else if (stage === 'funding') {
+      if (stageFunding) stageFunding.style.display = '';
+      railFunding?.classList.add('active');
+      document.getElementById('mbr-funding')?.classList.add('active');
+      if (window.innerWidth <= 1099 && stageFunding) {
+        stageFunding.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
+  // Expose globally so funding-scanner-ui can call it
+  window.__atlShowStage = showStage;
+
   railAnalysis?.addEventListener('click', () => showStage('analysis'));
   railSMC?.addEventListener('click', () => showStage('smc'));
+  railFunding?.addEventListener('click', () => showStage('funding'));
 
-  // ── Mobile bottom rail — only Analysis + Scanner ────────────
-  document.getElementById('mbr-analysis')?.addEventListener('click', () => {
-    showStage('analysis');
-  });
-
-  document.getElementById('mbr-smc')?.addEventListener('click', () => {
-    showStage('smc');
-  });
+  // ── Mobile bottom rail ──────────────────────────────────────
+  document.getElementById('mbr-analysis')?.addEventListener('click', () => showStage('analysis'));
+  document.getElementById('mbr-smc')?.addEventListener('click', () => showStage('smc'));
+  document.getElementById('mbr-funding')?.addEventListener('click', () => showStage('funding'));
 
   // ── Exchange toggle ──────────────────────────────────────────
   document.querySelectorAll('#smc-exchange-toggle .smc-toggle').forEach(btn => {
