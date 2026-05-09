@@ -754,9 +754,9 @@ function populateTradePanel(analysis, signal, data) {
         { label: `TP2 — ${s.rr2}R`, price: s.tp2, reason: s.tp2Reason },
         { label: `TP3 — ${s.rr3}R`, price: s.tp3, reason: s.tp3Reason },
       ].map(tp => `
-        <div style="background:var(--bg2);padding:8px 10px">
-          <div style="font-size:7px;color:#5a6470;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px">${tp.label}</div>
-          <div style="font-size:13px;color:#00e676;font-family:var(--font-mono);font-weight:600">$${formatPrice(tp.price)}</div>
+        <div style="background:var(--bg2);padding:8px 6px;min-width:0;overflow:hidden">
+          <div style="font-size:7px;color:#5a6470;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tp.label}</div>
+          <div style="font-size:11px;color:#00e676;font-family:var(--font-mono);font-weight:600;word-break:break-all;line-height:1.3">$${formatPrice(tp.price)}</div>
           <div style="font-size:8px;color:#8892a0;margin-top:2px;line-height:1.5">${tp.reason}</div>
         </div>`).join('')}
     </div>
