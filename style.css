@@ -1391,7 +1391,8 @@ body {
 .smc-ctrl-row--toggles { flex-wrap: wrap; gap: 0; }
 .smc-ctrl-row--actions { gap: 8px; padding-top: 8px; flex-wrap: wrap; }
 #smc-scan-btn, #smc-common-scan-btn, #smc-abort-btn {
-  flex: 1; justify-content: center; height: 34px; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  flex: 1; height: 34px; border-radius: 2px;
 }
 .smc-ctrl-label {
   font-size: 7px; color: var(--muted);
