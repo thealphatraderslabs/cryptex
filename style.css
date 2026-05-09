@@ -1392,9 +1392,11 @@ body {
 }
 .smc-ctrl-row--toggles { flex-wrap: wrap; gap: 0; }
 .smc-ctrl-row--actions { gap: 8px; padding-top: 8px; flex-wrap: wrap; }
+.smc-ctrl-row--btn { padding-top: 6px; }
+.smc-ctrl-row--status { padding-top: 4px; min-height: 16px; }
 #smc-scan-btn, #smc-common-scan-btn, #smc-abort-btn {
   display: flex; align-items: center; justify-content: center;
-  flex: 1; height: 34px; border-radius: 2px;
+  width: 100%; height: 34px; border-radius: 2px;
 }
 .smc-ctrl-label {
   font-size: 7px; color: var(--muted);
@@ -1771,63 +1773,63 @@ body {
 .smc-common-cell .smc-cell-inner { padding: 8px 6px 6px; }
 
 /* ══════════════════════════════════════════════════════════════
-   MOBILE SMC CONTROLS FIX
-   Force controls into stacked rows so buttons are always visible
+   MOBILE SMC — NUCLEAR POSITION OVERRIDE
+   stage-smc exits absolute flow entirely on mobile so every
+   row is guaranteed in the normal document flow and visible.
 ══════════════════════════════════════════════════════════════ */
-/* ── SMC stage + mobile scan button padding ─────────────────── */
 @media (max-width: 1099px) {
-  /* ROOT FIX: exit absolute positioning so controls are always in normal flow */
+  /* Pull stage-smc out of absolute positioning completely */
   #stage-smc {
-    position: relative;
-    inset: auto;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-    padding-bottom: 60px;
-    min-height: 0;
+    position: static !important;
+    inset: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    padding-bottom: 80px;
+    width: 100%;
   }
 
-  /* Controls: ensure full visibility, no clipping */
+  /* Controls must be fully in flow, never clipped */
   #smc-controls {
+    position: static !important;
+    overflow: visible !important;
     flex-shrink: 0;
-    overflow: visible;
-    position: relative;
-    z-index: 10;
+    height: auto !important;
   }
 
-  /* Toggles row: allow wrapping so TF buttons don't overflow */
-  .smc-ctrl-row--toggles {
-    flex-wrap: wrap;
-    gap: 6px;
-    row-gap: 6px;
+  /* Every row is a full-width block */
+  .smc-ctrl-row {
+    display: flex !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  /* Actions row: stack scan + common scan buttons full width */
-  .smc-ctrl-row--actions {
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 8px;
-  }
-
-  /* Both buttons full width on mobile */
+  /* Buttons: each takes full width, fixed height so always visible */
   #smc-scan-btn,
   #smc-common-scan-btn,
   #smc-abort-btn {
-    flex: none;
-    width: 100%;
-    height: 36px;
+    width: 100% !important;
+    flex: none !important;
+    height: 38px !important;
+    font-size: 11px;
   }
 
-  /* Status text below buttons */
+  /* Status row */
+  .smc-ctrl-row--status {
+    padding: 4px 0;
+    min-height: 20px;
+  }
   #smc-status {
-    max-width: 100%;
+    width: 100%;
     white-space: normal;
-    margin-left: 0;
     font-size: 9px;
-    padding-top: 2px;
   }
 
+  /* Separator hidden — saves space */
   .smc-ctrl-sep { display: none; }
+
+  /* Heatmap grid 2-col on mobile */
   .smc-grid { grid-template-columns: repeat(2, 1fr); }
   .smc-hover-card { width: 220px; }
 }
