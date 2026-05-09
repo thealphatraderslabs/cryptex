@@ -1367,7 +1367,8 @@ body {
 #stage-smc {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 /* When scanner is active, #stage top snaps to just below header (no strip) */
 #stage.smc-active {
@@ -1384,6 +1385,7 @@ body {
   border-bottom: 1px solid var(--border);
   padding: 8px 16px;
   flex-shrink: 0;
+  overflow: visible;
 }
 .smc-ctrl-row {
   display: flex; align-items: center; width: 100%;
