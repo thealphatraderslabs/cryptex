@@ -1776,12 +1776,58 @@ body {
 ══════════════════════════════════════════════════════════════ */
 /* ── SMC stage + mobile scan button padding ─────────────────── */
 @media (max-width: 1099px) {
-  #stage-smc { padding-bottom: 60px; }
+  /* ROOT FIX: exit absolute positioning so controls are always in normal flow */
+  #stage-smc {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    padding-bottom: 60px;
+    min-height: 0;
+  }
+
+  /* Controls: ensure full visibility, no clipping */
+  #smc-controls {
+    flex-shrink: 0;
+    overflow: visible;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Toggles row: allow wrapping so TF buttons don't overflow */
+  .smc-ctrl-row--toggles {
+    flex-wrap: wrap;
+    gap: 6px;
+    row-gap: 6px;
+  }
+
+  /* Actions row: stack scan + common scan buttons full width */
+  .smc-ctrl-row--actions {
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 8px;
+  }
+
+  /* Both buttons full width on mobile */
+  #smc-scan-btn,
+  #smc-common-scan-btn,
+  #smc-abort-btn {
+    flex: none;
+    width: 100%;
+    height: 36px;
+  }
+
+  /* Status text below buttons */
+  #smc-status {
+    max-width: 100%;
+    white-space: normal;
+    margin-left: 0;
+    font-size: 9px;
+    padding-top: 2px;
+  }
+
   .smc-ctrl-sep { display: none; }
   .smc-grid { grid-template-columns: repeat(2, 1fr); }
   .smc-hover-card { width: 220px; }
-  #smc-status {
-    max-width: 100%; white-space: normal;
-    margin-left: 0; font-size: 9px; padding-top: 2px;
-  }
 }
